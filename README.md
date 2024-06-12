@@ -6,6 +6,8 @@ Welcome to the Suitmedia Frontend Internship Test! This project serves as a test
 
 The Suitmedia Frontend Internship Test provides you with a sample project that simulates a creative ideas platform. It includes features such as browsing, sorting, contributing ideas, and API fetching, along with lazy loading of images for enhanced performance.
 
+[You can visit the demo here!](http://project-test-muhammad-haikal-adityo.ptmhz.com/)
+
 ## Features
 
 - Browse through a curated list of ideas
