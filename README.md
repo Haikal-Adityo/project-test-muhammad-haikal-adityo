@@ -11,5 +11,6 @@ The Suitmedia Frontend Internship Test provides you with a sample project that s
 - Browse through a curated list of ideas
 - Sort ideas by newest or oldest
 - Pagination for navigating through multiple pages of ideas
+- API fetching of posts content
 - Lazy loading of images for improved performance
 - Contribution of new ideas to the platform
