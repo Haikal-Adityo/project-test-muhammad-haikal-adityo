@@ -253,6 +253,11 @@ document.addEventListener("DOMContentLoaded", function() {
         fetchPosts(currentPage, sortOptionsElement.value);
     });
 
+    itemsPerPageElement.addEventListener("change", function() {
+        itemsPerPage = parseInt(this.value);
+        fetchPosts(currentPage, sortOptionsElement.value);
+    });    
+
     // Initial render
     fetchPosts(currentPage, sortOptionsElement.value);
 });
