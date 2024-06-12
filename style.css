@@ -39,7 +39,13 @@ header {
     margin-top: 5px;
     left: 50%;
     background: white;
-    transition: width 0.3s ease, left 0.3s ease;
+    transition: width 0.4s ease, left 0.4s ease;
+}
+
+.navbar-dark .nav-link:hover::after {
+    width: 100%;
+    left: 0;
+    background: white;
 }
 
 .navbar-dark .nav-link:hover::after {
@@ -49,7 +55,7 @@ header {
 }
 
 .navbar-collapse {
-    background-color: #FF6600; /* Your desired background color */
+    background-color: #FF6600;
     padding: 10px 30px;
     border-radius: 16px;
 }
@@ -311,5 +317,12 @@ header {
 
     .dropdown span {
         margin: 0;
+    }
+}
+@media (max-width: 490px) {
+    .navbar-toggler {
+        position: absolute;
+        right: 15px;
+        top: 15px;
     }
 }
