@@ -37,9 +37,16 @@ document.addEventListener("DOMContentLoaded", function() {
         return new Date(dateString).toLocaleDateString('id-ID', options);
     }
 
-    function fetchPosts(page) {
-        const apiUrl = `https://suitmedia-backend.suitdev.com/api/ideas?page[number]=${page}&page[size]=${itemsPerPage}`;
-    
+    function fetchPosts(page, sortOption) {
+        let sortParam = '';
+        if (sortOption === "newest") {
+            sortParam = '&sort=-published_at';
+        } else if (sortOption === "oldest") {
+            sortParam = '&sort=published_at';
+        }
+        
+        const apiUrl = `https://suitmedia-backend.suitdev.com/api/ideas?page[number]=${page}&page[size]=${itemsPerPage}${sortParam}`;
+        
         fetch(apiUrl, {
             headers: {
                 'Accept': 'application/json',
@@ -66,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error('Error fetching data:', error);
         });
     }
+    
     
     function extractThumbnailFromContent(content) {
         // Parse the HTML content
@@ -96,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const postElement = document.createElement("div");
             postElement.classList.add("post");
             postElement.innerHTML = `
-                <img class="post-thumbnail lazy" data-src="${post.thumbnail}" alt="Post Thumbnail">
+                <img class="post-thumbnail lazy" data-src="${post.thumbnail}" alt="Post Thumbnail" onerror="this.src='assets/default-thumbnail.webp';">
                 <div class="post-details">
                     <p class="post-date">${formatDate(post.published_at)}</p>
                     <h2 class="post-title">${post.title}</h2>
@@ -169,7 +177,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     function goToPage(page) {
         currentPage = page;
-        fetchPosts(currentPage);
+        fetchPosts(currentPage, sortOptionsElement.value);
     }
 
     function nextPage() {
@@ -229,23 +237,24 @@ document.addEventListener("DOMContentLoaded", function() {
     prevButton.addEventListener("click", prevPage);
     nextButton.addEventListener("click", nextPage);
 
-    sortOptionsElement.addEventListener("change", function() {
-        const sortOption = this.value;
-        if (sortOption === "newest") {
+    // Function to sort posts based on the selected option
+    function sortPosts(option) {
+        if (option === "newest") {
             posts.sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
-        } else if (sortOption === "oldest") {
+        } else if (option === "oldest") {
             posts.sort((a, b) => new Date(a.published_at) - new Date(b.published_at));
         }
-        renderPosts(posts);
-    });
+    }
 
-    itemsPerPageElement.addEventListener("change", function() {
-        itemsPerPage = parseInt(this.value);
-        fetchPosts(currentPage);
+    // Event listener for sort options change
+    sortOptionsElement.addEventListener("change", function() {
+        const sortOption = this.value;
+        sortPosts(sortOption);
+        fetchPosts(currentPage, sortOptionsElement.value);
     });
 
     // Initial render
-    fetchPosts(currentPage);
+    fetchPosts(currentPage, sortOptionsElement.value);
 });
 
 // PARALLAX ZOOM
